@@ -302,7 +302,8 @@ target/
 
 #vscode files
 .vscode/
-.json
+*.json
+*.csproj
 
 #测试文件夹
 UnitTest/
