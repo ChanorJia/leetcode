@@ -300,6 +300,9 @@ docs/_build/
 # PyBuilder
 target/
 
+#vscode files
+.vscode/
+.json
 
 #测试文件夹
 UnitTest/
