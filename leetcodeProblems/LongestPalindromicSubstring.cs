@@ -13,13 +13,13 @@ Example:
 Input: "cbbd"
 
 Output: "bb" */
+using System.Collections.Generic;
 
-public class longsetPalindromicSubstring
+public class longsetPalindromicSub
 {
     public string LongestPalindrome(string s)
     {
-       
-
+        
         return "";
     }
 }
