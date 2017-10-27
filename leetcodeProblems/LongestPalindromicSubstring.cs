@@ -21,6 +21,9 @@ public class longsetPalindromicSub
     {
         Dictionary<string,int> letterDic=new Dictionary<string, int>();
         
+        int finalStartIndx=0;
+        int finalLen=1;
+
         int startIndx=0;
         int len=1;
         
@@ -30,16 +33,53 @@ public class longsetPalindromicSub
             if(letterDic.ContainsKey(curretnLetter))
             {
                 int repeatIndx=-1;
+               
+
                 letterDic.TryGetValue(curretnLetter,out repeatIndx);
                
                 if((i-repeatIndx)==1||(i-repeatIndx)==2)
                 {
-                    if(len<=(i-repeatIndx))
+                    startIndx=0;
+                    len=1;
+
+                    if(len-1<=(i-repeatIndx))
                     {
                         len=i-repeatIndx+1;
                         startIndx=repeatIndx;
                     }
-                    //左右扩展 
+
+                     //向右扩展 //单向向左的情况不存在因为是DIctionary
+
+                    bool isallsame=true;
+                    for (int p = startIndx; p <= i ; p++)
+                    {
+                        if (curretnLetter != s.Substring(p, 1))
+                        {
+                            isallsame = false;
+                        }
+                    }
+
+                    for (int k = i + 1; k < s.Length; k++)
+                    {
+                       
+
+                        if (curretnLetter == s.Substring(k, 1) && isallsame)
+                        {
+                            if (k - repeatIndx >= len)
+                            {
+                                len = k - repeatIndx + 1;
+                                startIndx = repeatIndx;
+                            }
+                        }
+                        else
+                            break;
+                    }
+
+                    //左右扩展 在更新的startindx和len的基础上
+                    repeatIndx=startIndx;
+                    int j=i;
+                    i=startIndx+len-1;    //len包含第一个自身
+
                     int cirCount=repeatIndx>(s.Length-i)?(s.Length-i):repeatIndx;
 
                     for(int g=1;g<=cirCount;g++)   //从0开始 判断自身是否相等
@@ -59,21 +99,14 @@ public class longsetPalindromicSub
                         }
                     }
 
-                    //向右扩展
-                    for(int k=i+1;k<s.Length;k++)
-                    {
-                        if (curretnLetter == s.Substring(k, 1))
-                        {
-                            if (k - repeatIndx >= len)
-                            {
-                                len = k - repeatIndx + 1;
-                                startIndx = repeatIndx;
-                            }
-                        }
-                        else
-                            break;
-                    }
+                   i=j;
 
+                   
+                     if(len>=finalLen)
+                    {
+                        finalLen=len;
+                        finalStartIndx=startIndx;
+                    }
                 }
               
                 letterDic.Remove(curretnLetter);
@@ -85,6 +118,6 @@ public class longsetPalindromicSub
         }
 
 
-        return s.Substring(startIndx,len);
+        return s.Substring(finalStartIndx,finalLen);
     }
 }

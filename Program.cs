@@ -14,10 +14,12 @@ namespace leetcode
             Console.WriteLine(ss.LongestPalindrome("bb"));    ///bb
             Console.WriteLine(ss.LongestPalindrome("abcba"));  //abcba
             Console.WriteLine(ss.LongestPalindrome("babadada"));   //"adada"
-            Console.WriteLine(ss.LongestPalindrome("sooos"));
+            Console.WriteLine(ss.LongestPalindrome("sooos"));      
+            Console.WriteLine(ss.LongestPalindrome("ababababa"));      
+           
+          Console.WriteLine(ss.LongestPalindrome("aaabaaaa"));
             // test test=new test();
             // test.aaa();
-
 
 
             // Console.WriteLine("Hello World!");
