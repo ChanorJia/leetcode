@@ -14,41 +14,75 @@ string convert(string text, int nRows);
 
 convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR". 
  */
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 public class zigzag
 {
-     public string Convert(string s, int numRows) {
-        string result="";
-        
-     
-        List<string> ss=new List<string>();
-          List<string> final=new List<string>();
+    public string Convert(string s, int numRows)
+    {
+        List<string> col;
+        List<List<string>> colLst=new List<List<string>>();
 
-        string currentStr = "";
-        string connect="-";
-        for (int i = 0; i < s.Length; i++)
-        {
-            currentStr.PadRight(1,s.Substring(i,1).ToCharArray()[0]);
-            currentStr.PadRight(1,connect.ToCharArray()[0]);
-            if (i % numRows == 0)    //拐点 第一个拐点是 s[numRows]
-            {
-                 ss.Add(currentStr);
-            }
-        }
+        int i=0;
+        int currentColIndx=1;
+        int lastFullcolIndx=-1;
+        int ramins=numRows;
 
-        for(int j=0;j<ss.Count;j++)
+        if(numRows==1||s.Length<2)
+            return s;
+
+        while(i<s.Length)
         {
-            if(j>0&&j%2>0)
+            ramins=s.Length-i<numRows?s.Length-i:numRows;
+            col = new List<string>(numRows);
+
+            if (currentColIndx ==lastFullcolIndx || currentColIndx == 1)
             {
+                for (int j = 0; j < ramins; j++)
+                {
+                    col.Add(s.Substring((i + j), 1));
+                }
                 
+                lastFullcolIndx=numRows-1+currentColIndx;
+                colLst.Add(col);
+                currentColIndx++;
             }
             else
-                final.Add(ss[j]);
+            {
+                for (int j = 1; j < ramins - 1; j++)
+                {
+                    col = new List<string>(numRows);
+                    for (int c = 0; c < numRows; c++)
+                    {
+                        col.Add("");
+                    }
+                    col[numRows-j-1] = s.Substring((i + j), 1);
+                    colLst.Add(col);
+
+                    currentColIndx++;
+                }
+            }
+
+            i += ramins - 1;
+            
         }
-        
-       
-        
-        return result;
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int b = 0; b < numRows; b++)
+        {
+            for (int a = 0; a < colLst.Count; a++)
+            {
+                List<string> cc =colLst[a];
+                
+                if (b <= cc.Count - 1 && !string.IsNullOrWhiteSpace(cc[b]))
+                {
+                    sb.Append(cc[b].ToString().Trim());
+                }
+            }
+        }
+        return sb.ToString();
     }
 }
