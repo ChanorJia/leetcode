@@ -16,12 +16,12 @@ namespace leetcode
         public void TestzigzagConver()
         {
             zigzag zi=new zigzag();
-            Console.WriteLine(zi.Convert("PAYPALISHIRING", 3));
-            Console.WriteLine(zi.Convert("PAYPALISHIRING", 3)=="PAHNAPLSIIGYIR");
-            Console.WriteLine(zi.Convert("A", 1)=="A");
-            Console.WriteLine(zi.Convert("AB", 2)=="AB");
-            Console.WriteLine(zi.Convert("A", 2)=="A");
-            Console.WriteLine(zi.Convert("ABC", 2)=="ACB");
+            Console.WriteLine(zi.Convert2("PAYPALISHIRING", 3));
+            Console.WriteLine(zi.Convert2("PAYPALISHIRING", 3)=="PAHNAPLSIIGYIR");
+            Console.WriteLine(zi.Convert2("A", 1)=="A");
+            Console.WriteLine(zi.Convert2("AB", 2)=="AB");
+            Console.WriteLine(zi.Convert2("A", 2)=="A");
+            Console.WriteLine(zi.Convert2("ABC", 2)=="ACB");
         }
 
         void TestLongestPalindrome()
