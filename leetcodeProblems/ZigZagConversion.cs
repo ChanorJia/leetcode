@@ -17,6 +17,7 @@ convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 public class zigzag
 {
@@ -79,10 +80,45 @@ public class zigzag
                 
                 if (b <= cc.Count - 1 && !string.IsNullOrWhiteSpace(cc[b]))
                 {
-                    sb.Append(cc[b].ToString().Trim());
+                    sb.Append(cc[b] .ToString().Trim());
                 }
             }
         }
+        return sb.ToString();
+    }
+
+
+    public string Convert2(string s, int numRows)
+    {
+        StringBuilder sb=new StringBuilder();
+        
+        if(numRows==1) return s;
+
+        int len=s.Length;
+        
+        int interval=(numRows<<1)-2;
+
+        for(int i=0;i<len;i+=interval)
+        {
+            sb.Append(s.Substring(i,1));
+        }
+
+        for(int i=1;i<numRows-1;i++)
+        {
+            int inter=(i<<1);
+
+            for(int j=i;j<len;j+=inter)
+            {
+                sb.Append(s.Substring(j,1));
+                inter=interval-inter;
+            }
+        }
+
+        for(int j=numRows-1;j<len;j+=interval)
+        {
+            sb.Append(s.Substring(j,1));
+        }
+
         return sb.ToString();
     }
 }
