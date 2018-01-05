@@ -14,6 +14,7 @@ Input: "cbbd"
 
 Output: "bb" */
 using System.Collections.Generic;
+using System.Text;
 
 public class longsetPalindromicSub
 {
@@ -120,4 +121,38 @@ public class longsetPalindromicSub
 
         return s.Substring(finalStartIndx,finalLen);
     }
+
+    public bool IsPalindrome(int x)
+    {
+        StringBuilder sb = new StringBuilder(x.ToString());
+
+        int centerCount = 0;
+        if (isOddNumber(sb.Length))
+        {
+            centerCount = 1;
+        }
+        else
+        {
+            centerCount = 0;
+        }
+
+
+        int i = 0;
+        int j = sb.Length - 1;
+        int count = (sb.Length - centerCount) / 2;
+
+        for (int k = 0; k < count; k++)
+        {
+            if (sb[i + k] != sb[j - k])
+                return false;
+        }
+
+        return true;
+    }
+
+    bool isOddNumber(int n)
+    {
+        return (n & 1) == 1;
+    }
+
 }

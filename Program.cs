@@ -7,16 +7,46 @@ namespace leetcode
         static void Main(string[] args)
         {
             TestClass test=new TestClass();
+
             test.TestReverse();
+
+            // test.TestReverse();
+            // test.TestPalindromeInt();
+            test.TestRegularExpression();
         }
     }
 
     public class TestClass
     {
+        public void TestRegularExpression()
+        {
+            RegularExpressionMatching m=new RegularExpressionMatching();
+            Console.WriteLine(m.IsMatch("aa","a")==false);
+            Console.WriteLine(m.IsMatch("aa","aa")==true);
+            Console.WriteLine(m.IsMatch("aaa","aa")==false);
+
+            Console.WriteLine(m.IsMatch("aa","a*")==true);
+            Console.WriteLine(m.IsMatch("aa",".*")==true);
+            Console.WriteLine(m.IsMatch("ab",".*")==true);
+            
+            Console.WriteLine(m.IsMatch("aab","c*a*b")==true);
+        }
+
+        public void TestPalindromeInt()
+        {
+            longsetPalindromicSub l=new longsetPalindromicSub();
+            Console.WriteLine(l.IsPalindrome(231));
+            Console.WriteLine(l.IsPalindrome(232));
+            Console.WriteLine(l.IsPalindrome(0));
+            Console.WriteLine(l.IsPalindrome(12));
+            Console.WriteLine(l.IsPalindrome(2345432));
+        }
         public void TestReverse()
         {
-            ReverseInt ii=new ReverseInt();
-            ii.Reverse(343);
+            ReverseInteger re=new ReverseInteger();
+            Console.WriteLine(re.Reverse(231)==132);
+            Console.WriteLine(re.Reverse(-231)==-132);
+            Console.WriteLine(re.Reverse(120)==21);
         }
 
         public void TestzigzagConver()
@@ -45,10 +75,16 @@ namespace leetcode
             Console.WriteLine(ss.LongestPalindrome("aaabaaaa"));
         }
 
-        void TestTwoSum()
+        public void TestTwoSum()
         {
             TwoSumSolution twoSumSolution=new TwoSumSolution();
-            Console.WriteLine(twoSumSolution.TwoSum(new int[]{2,3,5,7,7},6));
+            int[] cc=twoSumSolution.TwoSum2(new int[]{2,3,5,7,7},8);
+            Console.WriteLine(cc[0]);
+            Console.WriteLine(cc[1]);
+
+            cc=twoSumSolution.TwoSum2(new int[]{3,2,4},6);
+            Console.WriteLine(cc[0]);
+            Console.WriteLine(cc[1]);
         }
 
         void TestYouyu()
