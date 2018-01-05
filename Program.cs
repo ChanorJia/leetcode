@@ -7,12 +7,18 @@ namespace leetcode
         static void Main(string[] args)
         {
             TestClass test=new TestClass();
-            test.TestzigzagConver();
+            test.TestReverse();
         }
     }
 
     public class TestClass
     {
+        public void TestReverse()
+        {
+            ReverseInt ii=new ReverseInt();
+            ii.Reverse(343);
+        }
+
         public void TestzigzagConver()
         {
             zigzag zi=new zigzag();
@@ -47,8 +53,8 @@ namespace leetcode
 
         void TestYouyu()
         {
-            test test=new test();
-            test.aaa();
+            // test test=new test();
+            // test.aaa();
         }
     }
 }
