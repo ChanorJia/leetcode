@@ -8,7 +8,7 @@ namespace leetcode
         {
             TestClass test=new TestClass();
 
-            test.TestReverse();
+         
 
             // test.TestReverse();
             // test.TestPalindromeInt();
@@ -21,15 +21,53 @@ namespace leetcode
         public void TestRegularExpression()
         {
             RegularExpressionMatching m=new RegularExpressionMatching();
+            Console.WriteLine(1);
             Console.WriteLine(m.IsMatch("aa","a")==false);
+            Console.WriteLine(2);
             Console.WriteLine(m.IsMatch("aa","aa")==true);
+            Console.WriteLine(3);
             Console.WriteLine(m.IsMatch("aaa","aa")==false);
-
+            Console.WriteLine(4);
             Console.WriteLine(m.IsMatch("aa","a*")==true);
+            Console.WriteLine(5);
             Console.WriteLine(m.IsMatch("aa",".*")==true);
+            Console.WriteLine(6);
             Console.WriteLine(m.IsMatch("ab",".*")==true);
-            
+            Console.WriteLine(7);
             Console.WriteLine(m.IsMatch("aab","c*a*b")==true);
+
+
+            Console.WriteLine(8);
+            Console.WriteLine(m.IsMatch("aaba","ab*a*c*a")==false);
+
+            Console.WriteLine(9);
+            Console.WriteLine(m.IsMatch("aaa","a*a")==true);
+
+            Console.WriteLine(10);
+            Console.WriteLine(m.IsMatch("aaa",".a")==false);
+
+            Console.WriteLine(11);
+            Console.WriteLine(m.IsMatch("aaa","ab*a*c*a")==true);
+
+
+            Console.WriteLine(12);
+            Console.WriteLine(m.IsMatch("aaa","ab*a")==false);
+
+            Console.WriteLine(13);
+            Console.WriteLine(m.IsMatch("a","ab*a")==false);
+
+            Console.WriteLine(14);
+            Console.WriteLine(m.IsMatch("a","ab*")==true);
+
+          
+            Console.WriteLine(15);
+            Console.WriteLine(m.IsMatch("a",".*..a*")==false);
+
+            Console.WriteLine(16);
+            Console.WriteLine(m.IsMatch("aaa","a.a")==true);
+          
+            Console.WriteLine(17);
+            Console.WriteLine(m.IsMatch("aaca","ab*a*c*a")==true);
         }
 
         public void TestPalindromeInt()
