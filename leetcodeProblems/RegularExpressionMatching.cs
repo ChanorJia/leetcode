@@ -3,13 +3,14 @@
 using System.Collections.Generic;
 
 public class RegularExpressionMatching {
-    public bool IsMatch(string s, string p) {
-        const string singleStr = ".";
-        const string multiStr = "*";
-        const string connectStr="-";
-        bool result = true;
 
+    const string singleStr = ".";
+    const string multiStr = "*";
+    const string connectStr = "-";
+
+    public bool IsMatch(string s, string p) {
        
+        bool result = true;
         string subpattern="";
         string subStr="";
         
@@ -38,13 +39,10 @@ public class RegularExpressionMatching {
             return true;
         }
 
-
-        Dictionary<int,string> starStr=new Dictionary<int, string>();
-         
+        Dictionary<int,string> starStr=new Dictionary<int, string>();       
         bool isNextStart=false;
-        List<string> sameStr=new List<string>();
-        
-        int lastStartIndx=-1;
+
+        int lastStartIndx=0;
         int i=0;
         int y=0;
         while(i<p.Length)
@@ -58,22 +56,16 @@ public class RegularExpressionMatching {
                 isNextStart=false;
             }
 
-            if(isNextStart)
+            if(isNextStart)   //带*号的pattern
             {
                 starStr.Add(y++,p.Substring(i,1));
                 
-                string tempStr="";
-                if(lastStartIndx<0)
-                {
-                     tempStr=p.Substring(0,i);              
-                }
-                else
-                {
-                    tempStr=p.Substring(lastStartIndx,i-lastStartIndx);
-                }
+                string tempStr=p.Substring(lastStartIndx,i-lastStartIndx);            
 
                 if(!string.IsNullOrWhiteSpace(tempStr))
-                    sameStr.Add(tempStr);
+                {
+                    result=ProcessNotStarPart(tempStr,ref s);
+                }
                 
                 lastStartIndx=i+2;
                 i=i+2;
@@ -85,50 +77,18 @@ public class RegularExpressionMatching {
                 if (!temp.Contains(multiStr))                
                 {
                     if (!string.IsNullOrWhiteSpace(temp))
-                        sameStr.Add(temp);
+                    {
+                        result=ProcessNotStarPart(temp,ref s,false);
+                    }
+
+                    i=p.Length;
                 }
             }
             i++;
         }
 
-        //移除s中相同的部分 sameStr中可能会有.
-        for (int j = 0; j < sameStr.Count; j++)
-        {
-            string currentItem = sameStr[j].Trim();
-            if (s.Contains(currentItem))    //没有. 并且有完全相同的部分
-            {
-                int fIndx= s.IndexOf(currentItem);
-                s=s.Remove(fIndx,currentItem.Length);
-                s.Insert(fIndx,connectStr);
-            }
-            else if (currentItem.Contains(singleStr))  //有点 的处理
-            {
-                string[] tt = currentItem.Split(singleStr);
-                string ss = "";
-                foreach (string strItem in tt)
-                {
-                    if (string.IsNullOrWhiteSpace(currentItem))
-                        ss = currentItem.Replace(strItem, "");
-                }
-
-                if (ss.Trim().Length == tt.Length - 1)
-                {
-                    //currentItem replace后的长度和 split 后-1长度相等
-                    for (int c = 0; c < tt.Length; c++)
-                    {
-                        currentItem += tt[c] + ss.Substring(c, 1);
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else if (!currentItem.Contains(singleStr))  //没有点，且不相同
-            {
-                return false;
-            }
-        }
+        if (!result)
+            return result;
 
         string[] starArrays = s.Split(connectStr);
         int currentPatternIndx = 0;
@@ -151,6 +111,10 @@ public class RegularExpressionMatching {
                         starArrays[c] = "";
                         break;
                     }
+
+                    if (tempItem.StartsWith(letter))
+                        tempItem = tempItem.Replace(letter, "");
+
                     currentPatternIndx++;
                 }
             }
@@ -161,6 +125,8 @@ public class RegularExpressionMatching {
             if (!string.IsNullOrWhiteSpace(ss))
                 result = false;
         }
+
+        #region 老方法
         // //包含. 和*  或者包含 *
         // //* 一定出现在.或者字母后面
         // int i = 0, j = 0;
@@ -251,8 +217,72 @@ public class RegularExpressionMatching {
         //     j++;
         // }
 
+        #endregion
+
         return result;
     }
 
 
+    //处理不含*的部分
+    bool ProcessNotStarPart(string str,ref string s,bool isfromstart=true)
+    {
+        string currentItem = str.Trim();
+        if (s.Contains(currentItem))    //没有. 并且有完全相同的部分
+        {
+            int fIndx = -1;
+            if (isfromstart)
+                fIndx = s.IndexOf(currentItem);    //总是移除第一个符合的
+            else
+                fIndx = s.LastIndexOf(currentItem);
+
+            s = s.Remove(fIndx, currentItem.Length);
+            s = s.Insert(fIndx, connectStr);
+        }
+        else if (currentItem.Contains(singleStr))  //有点 的处理
+        {
+            string[] tt = currentItem.Split(singleStr);
+            string ss = "";
+
+            foreach (string strItem in tt)
+            {
+                if (!string.IsNullOrWhiteSpace(strItem))
+                {
+                    int fIndx = -1;
+
+                    if (isfromstart)
+                        fIndx = s.IndexOf(strItem);
+                    else
+                        fIndx = s.LastIndexOf(strItem);
+
+                    if(fIndx<0)
+                    {
+                        return false;
+                    }
+
+                    
+
+                    s = s.Remove(fIndx, currentItem.Length);
+                    s = s.Insert(fIndx, connectStr);
+                    
+                }
+                    ss = currentItem.Replace(strItem, "");
+            }
+
+            if (ss.Trim().Length == tt.Length - 1)
+            {
+                //currentItem replace后的长度和 split 后-1长度相等
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if (!currentItem.Contains(singleStr))  //没有点，且不相同
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

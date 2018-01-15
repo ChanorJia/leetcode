@@ -68,6 +68,10 @@ namespace leetcode
           
             Console.WriteLine(17);
             Console.WriteLine(m.IsMatch("aaca","ab*a*c*a")==true);
+
+         
+            Console.WriteLine(18);
+            Console.WriteLine(m.IsMatch("ab",".*..")==true);
         }
 
         public void TestPalindromeInt()
